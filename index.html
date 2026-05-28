@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ScamBuster PH</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #f8f7f4;
+    --surface: #ffffff;
+    --surface2: #f0efe9;
+    --text: #1a1a1a;
+    --text-muted: #6b6b6b;
+    --accent: #d94f3d;
+    --accent2: #2b6cb0;
+    --border: #e2e0d8;
+    --success: #2d7a4f;
+    --warning: #c17a00;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    background: rgba(248,247,244,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    z-index: 100;
+    padding: 0 2rem;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    font-size: 1.4rem;
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .nav-logo span { color: var(--accent); }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+
+  .nav-cta {
+    background: var(--accent);
+    color: white !important;
+    padding: 0.5rem 1.2rem;
+    border-radius: 6px;
+  }
+
+  .nav-cta:hover { opacity: 0.85; }
+
+  /* HERO */
+  .hero-wrap {
+    max-width: 1100px;
+    margin: 64px auto 0;
+    padding: 6rem 2rem 4rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: #fef2f0;
+    color: var(--accent);
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    border: 1px solid #fbd5cf;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .hero-wrap h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.2rem;
+    line-height: 1.1;
+    font-weight: 900;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-wrap h1 em {
+    font-style: normal;
+    color: var(--accent);
+  }
+
+  .hero-wrap p {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+    line-height: 1.7;
+  }
+
+  .hero-btns {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: white;
+    padding: 0.8rem 1.8rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 12px rgba(217,79,61,0.3);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(217,79,61,0.4);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--text);
+    padding: 0.8rem 1.8rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border: 1.5px solid var(--border);
+    transition: border-color 0.2s, background 0.2s;
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--text);
+    background: var(--surface2);
+  }
+
+  .hero-stats {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.06);
+  }
+
+  .stat-item {
+    text-align: center;
+    padding: 1rem;
+    background: var(--bg);
+    border-radius: 10px;
+  }
+
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: var(--accent);
+    display: block;
+  }
+
+  .stat-label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* SECTIONS */
+  section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 5rem 2rem;
+  }
+
+  .section-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.4rem;
+    font-weight: 900;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+  }
+
+  .section-sub {
+    color: var(--text-muted);
+    font-size: 1rem;
+    max-width: 560px;
+    margin-bottom: 3rem;
+    line-height: 1.7;
+  }
+
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  /* INVESTIGATIONS */
+  .investigations-grid { display: grid; gap: 1.5rem; }
+
+  .case-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.8rem;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 1.5rem;
+    align-items: start;
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+
+  .case-card:hover {
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    transform: translateY(-2px);
+  }
+
+  .case-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--border);
+    line-height: 1;
+    min-width: 48px;
+  }
+
+  .case-info h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.4rem; }
+
+  .case-info p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-bottom: 0.8rem;
+    line-height: 1.5;
+  }
+
+  .case-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+
+  .tag { font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 4px; font-weight: 600; }
+  .tag-red { background: #fef2f0; color: var(--accent); }
+  .tag-blue { background: #eff6ff; color: var(--accent2); }
+  .tag-green { background: #f0fdf4; color: var(--success); }
+  .tag-yellow { background: #fffbeb; color: var(--warning); }
+
+  .case-status {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .status-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .status-malicious { color: var(--accent); }
+  .status-malicious .status-dot { background: var(--accent); }
+  .status-processing { color: var(--warning); }
+  .status-processing .status-dot { background: var(--warning); }
+
+  /* AWARENESS */
+  .awareness-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .awareness-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.8rem;
+    transition: box-shadow 0.2s;
+  }
+
+  .awareness-card:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+  .awareness-icon { font-size: 2rem; margin-bottom: 1rem; }
+  .awareness-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .awareness-card p { font-size: 0.875rem; color: var(--text-muted); line-height: 1.6; }
+
+  /* REPORT TOOL */
+  .report-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 3rem;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.06);
+  }
+
+  .report-form { display: grid; gap: 1.2rem; max-width: 600px; }
+
+  .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+
+  .form-group label { font-size: 0.85rem; font-weight: 600; color: var(--text); }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    padding: 0.75rem 1rem;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    background: var(--bg);
+    color: var(--text);
+    transition: border-color 0.2s;
+    outline: none;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus { border-color: var(--accent); }
+
+  .form-group textarea { resize: vertical; min-height: 100px; }
+
+  .submit-btn {
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 0.85rem 2rem;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 12px rgba(217,79,61,0.3);
+    width: fit-content;
+  }
+
+  .submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(217,79,61,0.4);
+  }
+
+  .submit-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .report-note { font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem; }
+
+  /* MUSIC */
+  .music-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+
+  .music-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    transition: box-shadow 0.2s;
+  }
+
+  .music-card:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+
+  .music-thumb {
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #1a1a2e, #16213e);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+  }
+
+  .music-info h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.2rem; }
+  .music-info p { font-size: 0.8rem; color: var(--text-muted); }
+
+  .music-badge {
+    margin-top: 0.4rem;
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    background: #1a1a2e;
+    color: #7dd3fc;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* ABOUT */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .about-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.06);
+  }
+
+  .about-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), #f4845f);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    margin: 0 auto 1rem;
+  }
+
+  .about-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 900;
+    margin-bottom: 0.3rem;
+  }
+
+  .about-card .role { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.2rem; }
+
+  .about-links { display: flex; flex-direction: column; gap: 0.6rem; margin-top: 1.2rem; }
+
+  .about-link {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.6rem 0.8rem;
+    border-radius: 8px;
+    background: var(--bg);
+    text-decoration: none;
+    color: var(--text);
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: background 0.2s;
+  }
+
+  .about-link:hover { background: var(--surface2); }
+
+  .about-content h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 900;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+  }
+
+  .about-content p { color: var(--text-muted); line-height: 1.8; margin-bottom: 1rem; font-size: 0.95rem; }
+
+  .skills-list { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.5rem; }
+
+  .skill-tag {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2.5rem 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer-logo { font-family: 'Playfair Display', serif; font-weight: 900; font-size: 1.2rem; }
+  .footer-logo span { color: var(--accent); }
+  footer p { font-size: 0.85rem; color: var(--text-muted); }
+
+  /* TOAST */
+  .toast {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    padding: 1rem 1.5rem;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    z-index: 999;
+    color: white;
+  }
+
+  .toast.success { background: var(--success); }
+  .toast.error { background: var(--accent); }
+  .toast.show { transform: translateY(0); opacity: 1; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-wrap > * { animation: fadeUp 0.6s ease both; }
+  .hero-wrap > *:nth-child(2) { animation-delay: 0.15s; }
+
+  @media (max-width: 768px) {
+    .hero-wrap { grid-template-columns: 1fr; gap: 2rem; padding: 3rem 1.5rem 2rem; }
+    .hero-wrap h1 { font-size: 2.4rem; }
+    .awareness-grid { grid-template-columns: 1fr; }
+    .music-grid { grid-template-columns: 1fr; }
+    .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .nav-links { display: none; }
+    section { padding: 3rem 1.5rem; }
+    .case-card { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Scam<span>Buster</span> PH</a>
+  <ul class="nav-links">
+    <li><a href="#investigations">Investigations</a></li>
+    <li><a href="#awareness">Awareness</a></li>
+    <li><a href="#music">Music</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#report" class="nav-cta">Report a Scam</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero-wrap">
+  <div>
+    <div class="hero-badge">🇵🇭 Based in Mindanao</div>
+    <h1>Exposing <em>scammers</em> one report at a time.</h1>
+    <p>ScamBuster PH investigates phishing operations, documents evidence, and reports them to authorities — protecting Filipinos from online fraud.</p>
+    <div class="hero-btns">
+      <a href="#investigations" class="btn-primary">View Investigations</a>
+      <a href="#report" class="btn-secondary">Report a Scam</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat-item">
+      <span class="stat-num">8</span>
+      <span class="stat-label">URLs Reported</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">1</span>
+      <span class="stat-label">Operations Busted</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">3</span>
+      <span class="stat-label">Agencies Notified</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num" style="color:var(--success)">✓</span>
+      <span class="stat-label">Netcraft Confirmed</span>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- INVESTIGATIONS -->
+<section id="investigations">
+  <div class="section-label">Case Files</div>
+  <h2 class="section-title">Investigations</h2>
+  <p class="section-sub">Documented phishing operations discovered and reported by ScamBuster PH.</p>
+  <div class="investigations-grid">
+    <div class="case-card">
+      <div class="case-num">01</div>
+      <div class="case-info">
+        <h3>Amazon.com/mytv Phishing Network</h3>
+        <p>A coordinated phishing operation using Google Sites pages hosted under <code style="background:var(--surface2);padding:0.1rem 0.4rem;border-radius:4px;font-size:0.85rem;">amazoncom-mytv.com</code> to impersonate Amazon's TV activation flow. 8 pages discovered. Amazon Security responded and confirmed investigation.</p>
+        <div class="case-tags">
+          <span class="tag tag-red">Phishing</span>
+          <span class="tag tag-blue">Trademark Abuse</span>
+          <span class="tag tag-blue">Google Sites</span>
+          <span class="tag tag-green">Reported</span>
+        </div>
+      </div>
+      <div>
+        <div class="case-status status-malicious">
+          <div class="status-dot"></div>
+          Malicious
+        </div>
+        <div style="font-size:0.75rem;color:var(--text-muted);margin-top:0.5rem;text-align:right;">May 27, 2026</div>
+      </div>
+    </div>
+    <div class="case-card" style="opacity:0.6;">
+      <div class="case-num">02</div>
+      <div class="case-info">
+        <h3>Next Investigation</h3>
+        <p>More cases coming soon. Know a scam? Submit a report below.</p>
+        <div class="case-tags"><span class="tag tag-yellow">Pending</span></div>
+      </div>
+      <div class="case-status status-processing">
+        <div class="status-dot"></div>
+        Open
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- AWARENESS -->
+<section id="awareness">
+  <div class="section-label">Stay Safe</div>
+  <h2 class="section-title">Scam Awareness</h2>
+  <p class="section-sub">Know how to spot and avoid the most common scams targeting Filipinos online.</p>
+  <div class="awareness-grid">
+    <div class="awareness-card">
+      <div class="awareness-icon">🎣</div>
+      <h3>Phishing Sites</h3>
+      <p>Fake websites mimicking real ones to steal credentials. Always check the URL — scammers use tricky domains like <em>amazoncom-mytv.com</em> instead of <em>amazon.com</em>.</p>
+    </div>
+    <div class="awareness-card">
+      <div class="awareness-icon">💼</div>
+      <h3>Fake Job Offers</h3>
+      <p>Too-good-to-be-true work-from-home offers promising ₱500–₱2,000/day. They eventually ask for a "registration fee" or your personal info.</p>
+    </div>
+    <div class="awareness-card">
+      <div class="awareness-icon">💸</div>
+      <h3>GCash / Maya Scams</h3>
+      <p>Fake "you received money" notifications with phishing links. Always open GCash/Maya directly from the app — never click links in SMS or chat.</p>
+    </div>
+    <div class="awareness-card">
+      <div class="awareness-icon">❤️</div>
+      <h3>Romance Scams</h3>
+      <p>Scammers build fake relationships then ask for money. If someone online asks for money, it's almost always a scam.</p>
+    </div>
+    <div class="awareness-card">
+      <div class="awareness-icon">💻</div>
+      <h3>Tech Support Scams</h3>
+      <p>"Your computer has a virus! Call Microsoft now!" — Microsoft, Google, and Apple will never call you unsolicited.</p>
+    </div>
+    <div class="awareness-card">
+      <div class="awareness-icon">🏦</div>
+      <h3>Investment Pyramiding</h3>
+      <p>Very common in Mindanao. If returns depend on recruitment, it's pyramiding — illegal and unsustainable.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- REPORT TOOL -->
+<section id="report">
+  <div class="section-label">Take Action</div>
+  <h2 class="section-title">Report a Scam</h2>
+  <p class="section-sub">Found a suspicious site or got targeted by a scammer? Submit it here and we'll investigate.</p>
+  <div class="report-section">
+    <div class="report-form">
+      <div class="form-group">
+        <label>Scam URL or Phone Number *</label>
+        <input type="text" id="scam_url" placeholder="e.g. https://suspicious-site.com or +63 9XX XXX XXXX">
+      </div>
+      <div class="form-group">
+        <label>Scam Type *</label>
+        <select id="scam_type">
+          <option value="">Select a type...</option>
+          <option>Phishing Website</option>
+          <option>Fake Job Offer</option>
+          <option>GCash / Maya Scam</option>
+          <option>Romance Scam</option>
+          <option>Tech Support Scam</option>
+          <option>Investment / Pyramiding</option>
+          <option>SMS Scam</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Description</label>
+        <textarea id="description" placeholder="Describe what happened or what makes this suspicious..."></textarea>
+      </div>
+      <div class="form-group">
+        <label>Your Email (optional — for follow-up)</label>
+        <input type="email" id="reporter_email" placeholder="your@email.com">
+      </div>
+      <button class="submit-btn" id="submit-btn" onclick="submitReport()">🚨 Submit Report</button>
+      <p class="report-note">Reports sent directly to ScamBuster PH. For urgent cases, also report to <strong>NBI Cybercrime Division</strong> at report.cybercrime.gov.ph</p>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- MUSIC -->
+<section id="music">
+  <div class="section-label">YouTube / Music</div>
+  <h2 class="section-title">Rap & Content</h2>
+  <p class="section-sub">ScamBuster PH is also home to the "Bro Is NOT Tuff" YouTube rap roast series.</p>
+  <div class="music-grid">
+    <div class="music-card">
+      <div class="music-thumb">🎤</div>
+      <div class="music-info">
+        <h3>Bro Is NOT Tuff — Part 1</h3>
+        <p>The original roast that started it all</p>
+        <span class="music-badge">🔴 Live</span>
+      </div>
+    </div>
+    <div class="music-card">
+      <div class="music-thumb">🎤</div>
+      <div class="music-info">
+        <h3>Bro Is NOT Tuff — Bonus</h3>
+        <p>Carl Snitched</p>
+        <span class="music-badge">🔴 Live</span>
+      </div>
+    </div>
+    <div class="music-card">
+      <div class="music-thumb">🎤</div>
+      <div class="music-info">
+        <h3>Bro Is NOT Tuff — Part 2</h3>
+        <p>The sequel is here 🔥</p>
+        <span class="music-badge">🔴 Live</span>
+      </div>
+    </div>
+    <div class="music-card">
+      <div class="music-thumb">🎵</div>
+      <div class="music-info">
+        <h3>More tracks in the works...</h3>
+        <p>Parts 3–6 planned — Kier arc, frisbee, door, and more</p>
+        <span class="music-badge" style="background:#374151;color:#9ca3af;">🎯 Planned</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-card">
+      <div class="about-avatar">🛡️</div>
+      <h3>Keane</h3>
+      <p class="role">ScamBuster · Music Producer · Content Creator</p>
+      <p style="font-size:0.85rem;color:var(--text-muted);line-height:1.6;">Student from Mindanao, PH. Aviation enthusiast. Game dev hobbyist. Rapper. And now — certified scam hunter.</p>
+      <div class="about-links">
+        <a href="https://www.youtube.com/@CarlsLifeDocumentaryOfficial" target="_blank" class="about-link">🎬 YouTube Channel</a>
+        <a href="https://www.facebook.com/share/14hf1FnGqVM/" target="_blank" class="about-link">📘 Facebook Page</a>
+        <a href="#investigations" class="about-link">🔍 View Investigations</a>
+        <a href="#report" class="about-link">🚨 Report a Scam</a>
+      </div>
+    </div>
+    <div class="about-content">
+      <h2>About ScamBuster PH</h2>
+      <p>ScamBuster PH started from a single scambaiting session — finding a network of 8 phishing sites impersonating Amazon, doing full WHOIS recon, and reporting them to Amazon Trust & Safety, MarkMonitor, Google Safe Browsing, and Netcraft.</p>
+      <p>Within hours, Netcraft confirmed the primary URL as <strong>malicious</strong>. Amazon Security personally responded and confirmed they are investigating. That's when ScamBuster PH became a real thing.</p>
+      <p>The mission is simple: find scams targeting Filipinos, document everything, report them to the right people, and make sure they get taken down.</p>
+      <div class="skills-list">
+        <span class="skill-tag">WHOIS Recon</span>
+        <span class="skill-tag">Phishing Detection</span>
+        <span class="skill-tag">DNS Analysis</span>
+        <span class="skill-tag">Abuse Reporting</span>
+        <span class="skill-tag">Scambaiting</span>
+        <span class="skill-tag">Music Production</span>
+        <span class="skill-tag">Game Development</span>
+        <span class="skill-tag">YouTube</span>
+        <span class="skill-tag">Aviation Nerd</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<footer>
+  <div class="footer-logo">Scam<span>Buster</span> PH</div>
+  <p>Protecting Filipinos from online fraud — one report at a time 🇵🇭</p>
+  <p style="font-size:0.8rem;">© 2026 ScamBuster PH</p>
+</footer>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+  function showToast(msg, type) {
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.className = 'toast ' + type + ' show';
+    setTimeout(() => toast.className = 'toast ' + type, 4000);
+  }
+
+  function submitReport() {
+    const scam_url = document.getElementById('scam_url').value.trim();
+    const scam_type = document.getElementById('scam_type').value;
+    const description = document.getElementById('description').value.trim();
+    const reporter_email = document.getElementById('reporter_email').value.trim();
+
+    if (!scam_url || !scam_type) {
+      showToast('⚠️ Please fill in the URL and scam type.', 'error');
+      return;
+    }
+
+    const btn = document.getElementById('submit-btn');
+    btn.disabled = true;
+    btn.textContent = '📤 Sending...';
+
+    const templateParams = {
+      scam_url: scam_url,
+      scam_type: scam_type,
+      description: description || 'No description provided.',
+      reporter_email: reporter_email || 'Anonymous',
+      name: reporter_email || 'Anonymous Reporter',
+      message: `Scam URL: ${scam_url}\nScam Type: ${scam_type}\nDescription: ${description || 'N/A'}\nReporter: ${reporter_email || 'Anonymous'}`
+    };
+
+    fetch('https://api.emailjs.com/api/v1.0/email/send', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        service_id: 'service_good',
+        template_id: 'template_vh09cmg',
+        user_id: 'tgFhFBfOUfedz2gDx',
+        template_params: templateParams
+      })
+    })
+    .then(res => {
+      if (res.ok) {
+        showToast('✅ Report sent! We will investigate soon.', 'success');
+        document.getElementById('scam_url').value = '';
+        document.getElementById('scam_type').value = '';
+        document.getElementById('description').value = '';
+        document.getElementById('reporter_email').value = '';
+      } else {
+        return res.text().then(t => { throw new Error(t); });
+      }
+      btn.disabled = false;
+      btn.textContent = '🚨 Submit Report';
+    })
+    .catch((err) => {
+      console.error('EmailJS error:', err);
+      showToast('❌ Failed to send. Please try again.', 'error');
+      btn.disabled = false;
+      btn.textContent = '🚨 Submit Report';
+    });
+  }
+
+  // Nav highlight on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 100) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + current ? 'var(--accent)' : '';
+    });
+  });
+</script>
+</body>
+</html>
