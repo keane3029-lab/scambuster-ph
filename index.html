@@ -2,11 +2,15 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="google-site-verification" content="0KLA-YuRnskVt6W2lYqDZsWV1UyxQ05kFVN7f6WBYyU" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ScamBuster PH</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
-
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+  (function(){
+    emailjs.init({ publicKey: "tgFhFBfOUfedz2gDx" });
+  })();
+</script>
 <style>
   :root {
     --bg: #f8f7f4;
@@ -763,8 +767,8 @@
       <div class="music-thumb">🎤</div>
       <div class="music-info">
         <h3>Bro Is NOT Tuff — Part 2</h3>
-        <p>The sequel is here 🔥</p>
-        <span class="music-badge">🔴 Live</span>
+        <p>Dropping May 2026</p>
+        <span class="music-badge" style="background:#2d7a4f;color:#a7f3d0;">🔜 Coming Soon</span>
       </div>
     </div>
     <div class="music-card">
@@ -789,8 +793,7 @@
       <p class="role">ScamBuster · Music Producer · Content Creator</p>
       <p style="font-size:0.85rem;color:var(--text-muted);line-height:1.6;">Student from Mindanao, PH. Aviation enthusiast. Game dev hobbyist. Rapper. And now — certified scam hunter.</p>
       <div class="about-links">
-        <a href="https://www.youtube.com/@CarlsLifeDocumentaryOfficial" target="_blank" class="about-link">🎬 YouTube Channel</a>
-        <a href="https://www.facebook.com/share/14hf1FnGqVM/" target="_blank" class="about-link">📘 Facebook Page</a>
+        <a href="#" class="about-link">🎬 YouTube Channel</a>
         <a href="#investigations" class="about-link">🔍 View Investigations</a>
         <a href="#report" class="about-link">🚨 Report a Scam</a>
       </div>
@@ -858,35 +861,22 @@
       message: `Scam URL: ${scam_url}\nScam Type: ${scam_type}\nDescription: ${description || 'N/A'}\nReporter: ${reporter_email || 'Anonymous'}`
     };
 
-    fetch('https://api.emailjs.com/api/v1.0/email/send', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        service_id: 'service_good',
-        template_id: 'template_vh09cmg',
-        user_id: 'tgFhFBfOUfedz2gDx',
-        template_params: templateParams
-      })
-    })
-    .then(res => {
-      if (res.ok) {
+    emailjs.send('service_7g2pq2n', 'template_vh09cmg', templateParams)
+      .then(() => {
         showToast('✅ Report sent! We will investigate soon.', 'success');
         document.getElementById('scam_url').value = '';
         document.getElementById('scam_type').value = '';
         document.getElementById('description').value = '';
         document.getElementById('reporter_email').value = '';
-      } else {
-        return res.text().then(t => { throw new Error(t); });
-      }
-      btn.disabled = false;
-      btn.textContent = '🚨 Submit Report';
-    })
-    .catch((err) => {
-      console.error('EmailJS error:', err);
-      showToast('❌ Failed to send. Please try again.', 'error');
-      btn.disabled = false;
-      btn.textContent = '🚨 Submit Report';
-    });
+        btn.disabled = false;
+        btn.textContent = '🚨 Submit Report';
+      })
+      .catch((err) => {
+        console.error('EmailJS error:', err);
+        showToast('❌ Failed to send. Please try again.', 'error');
+        btn.disabled = false;
+        btn.textContent = '🚨 Submit Report';
+      });
   }
 
   // Nav highlight on scroll
