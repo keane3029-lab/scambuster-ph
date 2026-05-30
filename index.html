@@ -553,15 +553,42 @@
   .hero-wrap > * { animation: fadeUp 0.6s ease both; }
   .hero-wrap > *:nth-child(2) { animation-delay: 0.15s; }
 
+  @media (max-width: 900px) {
+    .awareness-grid { grid-template-columns: repeat(2, 1fr); }
+    .music-grid { grid-template-columns: 1fr; }
+    .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .hero-wrap { grid-template-columns: 1fr; gap: 2rem; padding: 4rem 1.5rem 2rem; }
+  }
+
   @media (max-width: 768px) {
-    .hero-wrap { grid-template-columns: 1fr; gap: 2rem; padding: 3rem 1.5rem 2rem; }
-    .hero-wrap h1 { font-size: 2.4rem; }
+    .hero-wrap { grid-template-columns: 1fr; gap: 2rem; padding: 3rem 1.2rem 2rem; }
+    .hero-wrap h1 { font-size: 2rem; }
+    .hero-stats { grid-template-columns: repeat(2, 1fr); gap: 1rem; padding: 1.2rem; }
+    .stat-num { font-size: 1.8rem; }
     .awareness-grid { grid-template-columns: 1fr; }
     .music-grid { grid-template-columns: 1fr; }
     .about-grid { grid-template-columns: 1fr; gap: 2rem; }
     .nav-links { display: none; }
-    section { padding: 3rem 1.5rem; }
+    section { padding: 2.5rem 1.2rem; }
     .case-card { grid-template-columns: 1fr; }
+    .section-title { font-size: 1.8rem; }
+    .report-section { padding: 1.5rem; }
+    .report-form { max-width: 100%; }
+    .submit-btn { width: 100%; text-align: center; }
+    footer { flex-direction: column; text-align: center; gap: 0.5rem; }
+    .hero-btns { flex-direction: column; }
+    .hero-btns a { text-align: center; }
+    .btn-primary, .btn-secondary { width: 100%; text-align: center; }
+  }
+
+  @media (max-width: 480px) {
+    .hero-wrap h1 { font-size: 1.7rem; }
+    .section-title { font-size: 1.5rem; }
+    .stat-num { font-size: 1.5rem; }
+    .case-num { font-size: 1.5rem; }
+    .music-thumb { width: 48px; height: 48px; font-size: 1.2rem; }
+    nav { padding: 0 1rem; }
+    .nav-logo { font-size: 1.1rem; }
   }
 </style>
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
