@@ -564,6 +564,7 @@
     .case-card { grid-template-columns: 1fr; }
   }
 </style>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body>
 
@@ -752,6 +753,7 @@
         <input type="email" id="reporter_email" placeholder="your@email.com">
       </div>
       <input type="text" id="honeypot" style="display:none;" tabindex="-1" autocomplete="off">
+      <div class="g-recaptcha" data-sitekey="6LdR7AMtAAAAANoCZyJsLM4XjYdESz59Sx9ouVkR" style="margin-bottom:0.5rem;"></div>
       <button class="submit-btn" id="submit-btn" onclick="submitReport()">🚨 Submit Report</button>
       <p class="report-note">Reports sent directly to ScamBuster PH. For urgent cases, also report to <strong>NBI Cybercrime Division</strong> at report.cybercrime.gov.ph</p>
     </div>
@@ -929,6 +931,13 @@
     // Honeypot check
     if (honeypot) return;
 
+    // reCAPTCHA check
+    const recaptcha = grecaptcha.getResponse();
+    if (!recaptcha) {
+      showToast('⚠️ Please complete the reCAPTCHA.', 'error');
+      return;
+    }
+
     // Basic validation
     if (!scam_url || !scam_type) {
       showToast('⚠️ Please fill in the URL/number and scam type.', 'error');
@@ -981,6 +990,7 @@
     .then(res => {
       if (res.ok) {
         showToast('✅ Report sent! We will investigate soon.', 'success');
+        grecaptcha.reset();
         document.getElementById('scam_url').value = '';
         document.getElementById('scam_type').value = '';
         document.getElementById('description').value = '';
