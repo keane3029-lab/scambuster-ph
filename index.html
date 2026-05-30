@@ -751,6 +751,7 @@
         <label>Your Email (optional — for follow-up)</label>
         <input type="email" id="reporter_email" placeholder="your@email.com">
       </div>
+      <input type="text" id="honeypot" style="display:none;" tabindex="-1" autocomplete="off">
       <button class="submit-btn" id="submit-btn" onclick="submitReport()">🚨 Submit Report</button>
       <p class="report-note">Reports sent directly to ScamBuster PH. For urgent cases, also report to <strong>NBI Cybercrime Division</strong> at report.cybercrime.gov.ph</p>
     </div>
@@ -923,9 +924,34 @@
     const scam_type = document.getElementById('scam_type').value;
     const description = document.getElementById('description').value.trim();
     const reporter_email = document.getElementById('reporter_email').value.trim();
+    const honeypot = document.getElementById('honeypot').value;
 
+    // Honeypot check
+    if (honeypot) return;
+
+    // Basic validation
     if (!scam_url || !scam_type) {
-      showToast('⚠️ Please fill in the URL and scam type.', 'error');
+      showToast('⚠️ Please fill in the URL/number and scam type.', 'error');
+      return;
+    }
+
+    // URL validation
+    const urlPattern = /^(https?:\/\/|www\.|\+?[0-9]{7,15}$)/i;
+    if (!urlPattern.test(scam_url)) {
+      showToast('⚠️ Please enter a valid URL (https://...) or phone number.', 'error');
+      return;
+    }
+
+    // Minimum description length
+    if (description && description.length < 20) {
+      showToast('⚠️ Description too short. Please provide at least 20 characters.', 'error');
+      return;
+    }
+
+    // Block obvious spam URLs
+    const spamDomains = ['pornhub.com', 'test-scam', 'example.com', 'fake-bank'];
+    if (spamDomains.some(d => scam_url.toLowerCase().includes(d))) {
+      showToast('⚠️ Invalid submission detected.', 'error');
       return;
     }
 
