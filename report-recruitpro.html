@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RecruitPro Virtual / Talkytimes Case — ScamBuster PH</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #f8f7f4;
+    --surface: #ffffff;
+    --surface2: #f0efe9;
+    --text: #1a1a1a;
+    --text-muted: #6b6b6b;
+    --accent: #d94f3d;
+    --accent2: #2b6cb0;
+    --border: #e2e0d8;
+    --success: #2d7a4f;
+    --warning: #c17a00;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    background: rgba(248,247,244,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    z-index: 100;
+    padding: 0 2rem;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    font-size: 1.4rem;
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .nav-logo span { color: var(--accent); }
+
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { text-decoration: none; color: var(--text-muted); font-size: 0.9rem; font-weight: 500; }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-cta { background: var(--accent); color: white !important; padding: 0.5rem 1.2rem; border-radius: 6px; }
+
+  .page-header {
+    max-width: 900px;
+    margin: 64px auto 0;
+    padding: 4rem 2rem 1rem;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: #fef2f0;
+    color: var(--accent);
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    border: 1px solid #fbd5cf;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .page-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.3rem;
+    font-weight: 900;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+
+  .page-header h1 em { font-style: normal; color: var(--accent); }
+
+  .page-header p { color: var(--text-muted); font-size: 1rem; max-width: 600px; line-height: 1.7; }
+
+  .case-summary {
+    max-width: 900px;
+    margin: 1.5rem auto 0;
+    padding: 0 2rem;
+  }
+
+  .case-summary-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem 1.8rem;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+  }
+
+  .case-summary-box strong { color: var(--text); }
+
+  .case-summary-box .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--warning);
+    font-weight: 700;
+    font-size: 0.8rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--warning); }
+
+  section { max-width: 900px; margin: 0 auto; padding: 2rem 2rem 5rem; }
+
+  .divider { border: none; border-top: 1px solid var(--border); max-width: 1100px; margin: 0 auto; }
+
+  .report-section {
+    overflow: hidden;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 3rem;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.06);
+  }
+
+  .report-form { display: grid; gap: 1.2rem; max-width: 600px; width: 100%; }
+  .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+  .form-group label { font-size: 0.85rem; font-weight: 600; color: var(--text); }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 0.75rem 1rem;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    background: var(--bg);
+    color: var(--text);
+    outline: none;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus { border-color: var(--accent); }
+  .form-group textarea { resize: vertical; min-height: 100px; }
+
+  .submit-btn {
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 0.85rem 2rem;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(217,79,61,0.3);
+    width: fit-content;
+  }
+
+  .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(217,79,61,0.4); }
+  .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+  .report-note { font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem; }
+
+  .alt-report { margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+  .alt-report p { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.8rem; }
+
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2.5rem 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer-logo { font-family: 'Playfair Display', serif; font-weight: 900; font-size: 1.2rem; }
+  .footer-logo span { color: var(--accent); }
+  footer p { font-size: 0.85rem; color: var(--text-muted); }
+
+  .toast {
+    position: fixed; bottom: 2rem; right: 2rem;
+    padding: 1rem 1.5rem; border-radius: 10px;
+    font-weight: 600; font-size: 0.9rem;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    transform: translateY(100px); opacity: 0;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    z-index: 999; color: white;
+  }
+  .toast.success { background: var(--success); }
+  .toast.error { background: var(--accent); }
+  .toast.show { transform: translateY(0); opacity: 1; }
+
+  @media (max-width: 768px) {
+    .page-header { padding: 3rem 1.2rem 1rem; }
+    .page-header h1 { font-size: 1.7rem; }
+    .case-summary { padding: 0 1.2rem; }
+    .nav-links { display: none; }
+    section { padding: 1.5rem 1.2rem 2.5rem; }
+    .report-section { padding: 1.5rem; }
+    .report-form { max-width: 100%; }
+    .submit-btn { width: 100%; text-align: center; }
+    footer { flex-direction: column; text-align: center; gap: 0.5rem; }
+  }
+</style>
+
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Scam<span>Buster</span> PH</a>
+  <ul class="nav-links">
+    <li><a href="index.html#investigations">Investigations</a></li>
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="report.html" class="nav-cta">Report a Scam</a></li>
+  </ul>
+</nav>
+
+<div class="page-header">
+  <div class="hero-badge">🚨 Active Case</div>
+  <h1>RecruitPro Virtual <em>/ Talkytimes.com</em></h1>
+  <p>We're investigating reports that RecruitPro Virtual recruits Filipinos under false pretenses and directs them to run romance scams on foreigners through talkytimes.com. If you have any connection to this, your report helps confirm or clear the case.</p>
+</div>
+
+<div class="case-summary">
+  <div class="case-summary-box">
+    <div class="status"><span class="status-dot"></span>UNDER INVESTIGATION — 2 anonymous sources so far</div>
+    <strong>What's alleged:</strong> Filipinos recruited for "chat support" / "online job" roles are placed on talkytimes.com and scripted to run romantic-deception schemes on foreign users, without being told the true nature of the work at hiring.
+  </div>
+</div>
+
+<section id="report">
+  <div class="report-section">
+    <div class="report-form">
+      <div class="form-group">
+        <label>Your connection to RecruitPro Virtual / Talkytimes *</label>
+        <select id="relation">
+          <option value="">Select one...</option>
+          <option>Former worker / chat operator</option>
+          <option>Current worker / chat operator</option>
+          <option>Applied but didn't proceed</option>
+          <option>Targeted as a romance scam victim</option>
+          <option>Other / I have information</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>What happened / what you know *</label>
+        <textarea id="description" placeholder="How were you recruited, what were you asked to do, dates, platform names, anything specific..." required></textarea>
+      </div>
+      <div class="form-group">
+        <label>Do you have evidence? (screenshots, job ad, chat logs)</label>
+        <input type="text" id="evidence_note" placeholder="Briefly describe what you have — we'll follow up if you leave an email">
+      </div>
+      <div class="form-group">
+        <label>Your Email (optional — leave blank to stay anonymous)</label>
+        <input type="email" id="reporter_email" placeholder="your@email.com">
+      </div>
+      <input type="text" id="honeypot" style="display:none;" tabindex="-1" autocomplete="off">
+      <div class="g-recaptcha" data-sitekey="6LdR7AMtAAAAANoCZyJsLM4XjYdESz59Sx9ouVkR" style="margin-bottom:0.5rem;"></div>
+      <button class="submit-btn" id="submit-btn" onclick="submitReport()">🚨 Submit to This Case</button>
+      <p class="report-note">Your report is added to the RecruitPro Virtual / Talkytimes case file. Anonymous submissions are fully accepted.</p>
+    </div>
+
+    <div class="alt-report">
+      <p>Prefer a Google Form instead?</p>
+      <a href="YOUR_GOOGLE_FORM_LINK_HERE" target="_blank" class="submit-btn" style="display:inline-block;text-decoration:none;background:var(--accent2);box-shadow:none;">📋 Report via Google Form</a>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<footer>
+  <div class="footer-logo">Scam<span>Buster</span> PH</div>
+  <p>Protecting Filipinos from online fraud — one report at a time 🇵🇭</p>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  function showToast(msg, type) {
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.className = 'toast ' + type + ' show';
+    setTimeout(() => toast.className = 'toast ' + type, 4000);
+  }
+
+  function submitReport() {
+    const relation = document.getElementById('relation').value;
+    const description = document.getElementById('description').value.trim();
+    const evidence_note = document.getElementById('evidence_note').value.trim();
+    const reporter_email = document.getElementById('reporter_email').value.trim();
+    const honeypot = document.getElementById('honeypot').value;
+
+    if (honeypot) return;
+
+    const recaptcha = grecaptcha.getResponse();
+    if (!recaptcha) {
+      showToast('⚠️ Please complete the reCAPTCHA.', 'error');
+      return;
+    }
+
+    if (!relation || !description) {
+      showToast('⚠️ Please select your connection and describe what happened.', 'error');
+      return;
+    }
+
+    if (description.length < 20) {
+      showToast('⚠️ Please provide a bit more detail (20+ characters).', 'error');
+      return;
+    }
+
+    const btn = document.getElementById('submit-btn');
+    btn.disabled = true;
+    btn.textContent = '📤 Sending...';
+
+    fetch('https://formspree.io/f/xdajyvya', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        case: 'RecruitPro Virtual / Talkytimes.com',
+        scam_url: 'https://talkytimes.com',
+        scam_type: 'Romance Scam / Recruitment',
+        relation: relation,
+        description: description,
+        evidence_note: evidence_note || 'None provided',
+        reporter_email: reporter_email || 'Anonymous'
+      })
+    })
+    .then(res => {
+      if (res.ok) {
+        showToast('✅ Added to the case file. Thank you.', 'success');
+        grecaptcha.reset();
+        document.getElementById('relation').value = '';
+        document.getElementById('description').value = '';
+        document.getElementById('evidence_note').value = '';
+        document.getElementById('reporter_email').value = '';
+        btn.disabled = false;
+        btn.textContent = '🚨 Submit to This Case';
+      } else {
+        return res.text().then(t => { throw new Error(t); });
+      }
+    })
+    .catch(() => {
+      showToast('⚠️ Something went wrong. Please try again.', 'error');
+      btn.disabled = false;
+      btn.textContent = '🚨 Submit to This Case';
+    });
+  }
+</script>
+
+</body>
+</html>
